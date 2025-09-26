@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扈佳俊生日快乐！</title>
+    <style>
+/* 为控制面板添加过渡效果 */
+.control-panel {
+    /* 保持原有样式 */
+    transition: all 0.3s ease; /* 添加平滑过渡效果 */
+}
+
+/* 隐藏状态样式 */
+.control-panel.hidden {
+    opacity: 0;
+    pointer-events: none; /* 隐藏时不可交互 */
+    bottom: -100px !important; /* 移出可视区域 */
+}
+
+       /* 标题容器样式 - 确保内容居中 */
+.header {
+    text-align: center; /* 水平居中文本 */
+    position: fixed; /* 固定定位，确保始终在屏幕中央 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-48%, 200%); /* 精确居中 */
+    width: 100%;
+    z-index: 100;
+    padding: 20px;
+    margin: 0;
+}
+
+/* 生日标题样式 - 加大字体 */
+.birthday-title {
+    font-size: 4.5rem; /* 大幅增加字体大小 */
+    margin: 0;
+    padding: 0;
+    color: #ffcc00; /* 金色，适合生日主题 */
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.7),
+        0 0 20px rgba(255, 215, 0, 0.5),
+        0 0 30px rgba(255, 215, 0, 0.3);
+    font-weight: bold;
+    letter-spacing: 3px;
+    /* 添加抖动动画 */
+    animation: titleShake 0.8s infinite;
+}
+
+/* 抖动效果关键帧 - 基于参考资料1和5的抖动实现 */
+@keyframes titleShake {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    10% {
+        transform: translate(-5px, -2px) rotate(-2deg);
+    }
+    20% {
+        transform: translate(-3px, 1px) rotate(1deg);
+    }
+    30% {
+        transform: translate(5px, -1px) rotate(0deg);
+    }
+    40% {
+        transform: translate(-2px, 2px) rotate(1deg);
+    }
+    50% {
+        transform: translate(3px, -2px) rotate(-1deg);
+    }
+    60% {
+        transform: translate(-4px, 1px) rotate(0deg);
+    }
+    70% {
+        transform: translate(4px, 1px) rotate(-1deg);
+    }
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+    90% {
+        transform: translate(2px, 2px) rotate(0deg);
+    }
+}
+
+        
+        /* 页面背景，可以替换成你的内容 */
+body {
+    background-image: url('birthday-bg.jpg'); /* 使用你的图片文件名 */
+    background-size: cover; /* 确保图片覆盖整个屏幕 */
+    background-position: center; /* 图片居中显示 */
+    background-attachment: fixed; /* 可选：滚动时背景固定 */
+    min-height: 100vh;
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    overflow: hidden;
+    color: white;
+    /* 添加半透明遮罩，确保文字清晰可见 */
+    position: relative;
+}
+
+/* 可选：添加遮罩层，使文字更清晰 */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* 黑色半透明遮罩 */
+    z-index: -1;
+}
+
+        
+        /* 标题样式 */
+        .header {
+            text-align: center;
+            padding: 20px;
+            z-index: 100;
+            position: relative;
+        }
+        /* 弹幕容器 - 关键：全屏覆盖且置于最顶层 */
+        #barrage-container {
+            position: fixed; /* 固定定位，覆盖整个视口 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* 重要：让容器不拦截鼠标事件，可以点击背后的元素 */
+            z-index: 9999; /* 确保在最上层 */
+        }
+        
+        /* 弹幕条目基础样式 */
+        .barrage-item {
+            position: absolute; /* 绝对定位，相对于弹幕容器 */
+            white-space: nowrap; /* 防止文字换行 */
+            color: white;
+            text-shadow: 1px 1px 2px black, 0 0 5px rgba(0,0,0,0.5); /* 白色文字带黑色阴影，确保清晰可见 */
+            font-weight: bold;
+            opacity: 0.9;
+            /* 动画相关属性 */
+            animation: moveLeft 15s linear forwards; /* 15秒完成动画，线性移动 */
+        }
+        
+        /* 关键帧动画：从右到左移动 */
+        @keyframes moveLeft {
+            from {
+                transform: translateX(100vw); /* 从屏幕右侧外开始 */
+            }
+            to {
+                transform: translateX(-100%); /* 移动到屏幕左侧外 */
+            }
+        }
+        
+        /* 控制面板样式 */
+        .control-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 100;
+            max-width: 800px;
+            width: 90%;
+        }
+        
+        .control-panel input {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background: #333;
+            color: white;
+            width: 70%;
+            margin-right: 10px;
+        }
+        
+        .control-panel button {
+            padding: 8px 15px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .control-panel button:hover {
+            background: #357ae8;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="birthday-title">扈佳俊生日快乐！！！</h1>
+        <p></p>
+    </div>
+    <!-- 背景音乐 - 自动播放、循环 -->
+<audio id="background-music" loop>
+    <source src="happy-birthday.mp3" type="audio/mpeg">
+    您的浏览器不支持音频元素。
+</audio>
+
+    <!-- 弹幕容器 -->
+    <div id="barrage-container"></div>
+    
+<div class="control-panel" id="control-panel">
+    <input type="text" id="new-barrage" placeholder="输入新的弹幕内容...">
+    <button id="add-barrage">添加弹幕</button>
+    <button id="clear-barrage">清空屏幕</button>
+    <button id="toggle-control-panel">隐藏控制面板</button>
+</div>
+
+    <script>
+        // 预定义的弹幕文本数组 - 这里是你需要修改弹幕内容的地方
+        const barrageTexts = [
+    '扈佳俊生日快乐！🎂',
+    '愿你岁岁平安，年年如意！',
+    '生日快乐，梦想成真！✨',
+    '新的一岁，新的精彩！',
+    '祝你事业有成，幸福美满！',
+    '愿所有的美好都围绕着你！',
+    '生日快乐，天天开心！🎉',
+    '愿你笑口常开，好运常伴！',
+    '祝你生日快乐，心想事成！',
+    '愿你的未来更加辉煌！🌟',
+    '生日快乐，健康快乐！',
+    '愿你的每一天都充满阳光！',
+    '祝你生日快乐，幸福永远！',
+    '愿你拥有最美好的一年！',
+    '生日快乐，前程似锦！',
+    '愿快乐与你同行，幸福与你相伴！',
+    '祝你生日快乐，万事如意！',
+    '愿你的笑容永远灿烂！',
+    '生日快乐，好运连连！',
+    '愿你的人生更加精彩！',
+    '祝你生日快乐，青春永驻！',
+    '愿你的梦想都实现！',
+    '生日快乐，幸福安康！',
+    '愿你拥有最美好的时光！',
+    '祝你生日快乐，开心每一天！'
+];
+        
+        // 获取弹幕容器
+        const barrageContainer = document.getElementById('barrage-container');
+        
+        // 创建单条弹幕的函数
+        function createBarrage(text) {
+            // 创建新的弹幕元素
+            const barrage = document.createElement('div');
+            barrage.className = 'barrage-item';
+            barrage.textContent = text;
+            
+            // 随机设置字体大小 (16px-24px)
+            const fontSize = Math.floor(Math.random() * 8) + 16;
+            barrage.style.fontSize = `${fontSize}px`;
+            
+            // 随机设置垂直位置 (距离顶部0-80%的屏幕高度)
+            const topPosition = Math.random() * 80;
+            barrage.style.top = `${topPosition}%`;
+            
+            // 随机设置颜色 (70%概率为白色，30%概率为随机亮色)
+            if (Math.random() < 0.3) {
+                barrage.style.color = getRandomBrightColor();
+            }
+            
+            // 将弹幕添加到容器中
+            barrageContainer.appendChild(barrage);
+            
+            // 动画结束后移除元素，避免DOM元素过多
+            setTimeout(() => {
+                barrage.remove();
+            }, 15000); // 与CSS动画时间一致
+        }
+        
+        // 生成随机亮色
+        function getRandomBrightColor() {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsl(${hue}, 100%, 70%)`;
+        }
+        
+        // 随机发送一条弹幕
+        function sendRandomBarrage() {
+            // 从数组中随机选择一条弹幕
+            const randomIndex = Math.floor(Math.random() * barrageTexts.length);
+            createBarrage(barrageTexts[randomIndex]);
+        }
+        
+        // 初始化：开始定期发送弹幕
+        let barrageInterval = setInterval(sendRandomBarrage, 500); // 每500毫秒发送一条
+        
+        // 添加新弹幕的事件监听
+        document.getElementById('add-barrage').addEventListener('click', function() {
+            const input = document.getElementById('new-barrage');
+            const text = input.value.trim();
+            if (text) {
+                // 添加到弹幕数组
+                barrageTexts.push(text);
+                // 立即显示新弹幕
+                createBarrage(text);
+                input.value = '';
+            }
+        });
+        
+        // 清空屏幕的事件监听
+        document.getElementById('clear-barrage').addEventListener('click', function() {
+            // 只移除当前显示的弹幕，不影响弹幕数组
+            document.querySelectorAll('.barrage-item').forEach(item => {
+                item.remove();
+            });
+        });
+        
+        // 按回车键添加弹幕
+        document.getElementById('new-barrage').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('add-barrage').click();
+            }
+        });
+	// 自动播放背景音乐（需要用户先与页面交互）
+document.addEventListener('click', function() {
+    const music = document.getElementById('background-music');
+    music.play().catch(e => console.log("音频播放需要用户交互", e));
+}, {once: true});
+
+// 可选：添加音乐控制按钮
+const musicControl = document.createElement('div');
+musicControl.innerHTML = `
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+        <button id="music-toggle" style="
+            background: rgba(255,255,255,0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        ">🔊 播放音乐</button>
+    </div>
+`;
+document.body.appendChild(musicControl);
+
+document.getElementById('music-toggle').addEventListener('click', function() {
+    const music = document.getElementById('background-music');
+    if (music.paused) {
+        music.play();
+        this.textContent = '🔊 播放中';
+    } else {
+        music.pause();
+        this.textContent = '🔇 静音';
+    }
+});
+// 获取控制面板元素
+const controlPanel = document.getElementById('control-panel');
+const toggleButton = document.getElementById('toggle-control-panel');
+
+// 检查用户偏好（从localStorage获取）
+function loadUserPreferences() {
+    const isHidden = localStorage.getItem('barrageControlPanelHidden') === 'true';
+    if (isHidden) {
+        controlPanel.classList.add('hidden');
+        toggleButton.textContent = '显示控制面板';
+    }
+}
+
+// 切换控制面板显示/隐藏
+function toggleControlPanel() {
+    if (controlPanel.classList.contains('hidden')) {
+        // 显示控制面板
+        controlPanel.classList.remove('hidden');
+        toggleButton.textContent = '隐藏控制面板';
+        localStorage.setItem('barrageControlPanelHidden', 'false');
+    } else {
+        // 隐藏控制面板
+        controlPanel.classList.add('hidden');
+        toggleButton.textContent = '显示控制面板';
+        localStorage.setItem('barrageControlPanelHidden', 'true');
+    }
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', function() {
+    loadUserPreferences();
+    
+    // 添加事件监听
+    toggleButton.addEventListener('click', toggleControlPanel);
+    
+    // 添加快捷键支持：按ESC键也可以切换控制面板
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            toggleControlPanel();
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
